@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Onboarding Agent</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; padding: 48px 24px; }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; }
+    .sub { color: #888; margin-bottom: 40px; }
+    h2 { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #888; margin: 32px 0 12px; }
+    .card { background: #141414; border: 1px solid #262626; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px; }
+    .method { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 10px; vertical-align: middle; }
+    .get  { background: #1a3a2a; color: #4ade80; }
+    .post { background: #1a2a3a; color: #60a5fa; }
+    .path { font-family: monospace; font-size: .95rem; vertical-align: middle; }
+    .desc { color: #aaa; margin-top: 8px; font-size: .9rem; }
+    pre { background: #0f0f0f; border: 1px solid #262626; border-radius: 6px; padding: 16px; overflow-x: auto; font-size: .82rem; line-height: 1.6; margin-top: 16px; color: #ccc; }
+    .badge { display: inline-block; font-size: .72rem; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+    .approved { background:#1a3a2a; color:#4ade80; }
+    .escalated { background:#3a1a1a; color:#f87171; }
+    .pending  { background:#3a2e1a; color:#fbbf24; }
+    footer { margin-top: 48px; color: #555; font-size: .8rem; }
+    a { color: #60a5fa; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI Onboarding Agent</h1>
+  <p class="sub">Rule-based customer onboarding pipeline — validate → compliance → risk → provision</p>
+
+  <h2>Decisions</h2>
+  <div class="card">
+    <span class="badge approved">approved</span> Passed all checks. Account provisioned, intro call scheduled.<br><br>
+    <span class="badge escalated">escalated</span> Validation failure or compliance flag. Routed to human review.<br><br>
+    <span class="badge pending">pending_review</span> Risk score &gt; 0.7. Awaiting human approval.
+  </div>
+
+  <h2>Endpoints</h2>
+
+  <div class="card">
+    <span class="method get">GET</span><span class="path">/api/onboard</span>
+    <p class="desc">Run all 10 sample customers. Returns a summary and full result array.</p>
+    <pre>curl https://ai-onboarding-agent-pi.vercel.app/api/onboard</pre>
+  </div>
+
+  <div class="card">
+    <span class="method post">POST</span><span class="path">/api/onboard</span>
+    <p class="desc">Process a single customer. Send a JSON body with the fields below.</p>
+    <pre>curl -X POST https://ai-onboarding-agent-pi.vercel.app/api/onboard \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "cust-001",
+    "email": "alice@example.com",
+    "company": "Acme Corp",
+    "country": "US",
+    "tier": "pro",
+    "seats": 25
+  }'</pre>
+  </div>
+
+  <h2>Required fields</h2>
+  <div class="card">
+    <pre>id       string   Unique customer identifier
+email    string   Contact email
+company  string   Company name (used to infer industry)
+country  string   ISO 3166-1 alpha-2 code (e.g. "US", "DE", "NG")
+tier     string   "free" | "pro" | "enterprise"
+seats    integer  Number of seats (≥ 1)</pre>
+  </div>
+
+  <h2>Source</h2>
+  <div class="card">
+    <a href="https://github.com/harunka86/ai-onboarding-agent" target="_blank">github.com/harunka86/ai-onboarding-agent</a>
+  </div>
+
+  <footer>Built with Node.js · Deployed on Vercel</footer>
+</div>
+</body>
+</html>
