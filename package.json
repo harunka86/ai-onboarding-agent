@@ -1,0 +1,16 @@
+{
+  "name": "ai-onboarding-agent",
+  "version": "1.0.0",
+  "description": "Customer onboarding automation using Claude AI",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test src/agents/onboardingAgent.test.js",
+    "audit-logs": "node src/scripts/auditViewer.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.0.0"
+  }
+}
